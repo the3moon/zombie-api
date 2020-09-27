@@ -6,11 +6,7 @@ import { ZombiesModule } from './modules/zombies/zombies.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRoot(
-      process.env.NODE_ENV === 'test'
-        ? process.env.MONGO_URI_TEST
-        : process.env.MONGO_URI,
-    ),
+    MongooseModule.forRoot(process.env.MONGO_URI),
     ZombiesModule,
   ],
 })
