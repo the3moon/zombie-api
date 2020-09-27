@@ -17,6 +17,7 @@ $ yarn install
 $ yarn start:dev
 
 # production mode
+$ yarn build
 $ yarn start
 ```
 
@@ -32,7 +33,7 @@ $ npm run test:cov
 
 ## TODO:
 
-- CRUD for zombies
-- CRUD for items
-- zombie test
-- items test
+- [x] CRUD for zombies
+- [ ] CRUD for items
+- [x] zombie test
+- [ ] items test
