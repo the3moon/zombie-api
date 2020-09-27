@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, model } from 'mongoose';
 
 @Schema()
 export class Zombie extends Document {
@@ -11,3 +11,4 @@ export class Zombie extends Document {
 }
 
 export const ZombieSchema = SchemaFactory.createForClass(Zombie);
+export const ZombieModel = model(Zombie.name, ZombieSchema);
