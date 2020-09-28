@@ -25,7 +25,7 @@ export class CurrencyService {
     #isFetching = false;
     #fetchPromise: Promise<AxiosResponse<NPBresponse[]>>;
 
-    async getExchangeItems(){
+    async getExchangeRates(){
         const milisendsInDay = 1000 * 60 * 60 * 24;
         const now = Date.now();
         if(!this.#exchangeCurrencies || !this.#lastUpdate || now - this.#lastUpdate > milisendsInDay){

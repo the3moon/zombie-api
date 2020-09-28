@@ -12,20 +12,27 @@ describe('CurrencyService', () => {
     currencyService = itemsModule.get<CurrencyService>(CurrencyService);
   });
 
-  describe('GET', () => {
+  describe('Get curriencies rates', () => {
     it('should make only one api call', async () => {
       const tables: Exchange[][] = await Promise.all([
-        currencyService.getExchangeItems(),
-        currencyService.getExchangeItems(),
+        currencyService.getExchangeRates(),
+        currencyService.getExchangeRates(),
       ]);
+      const table3 = await currencyService.getExchangeRates();
       expect(tables[0] === tables[1]).toBeTruthy();
+      expect(tables[0] === table3).toBeTruthy();
     });
 
     it('should return currency exchange table', async () => {
-      const table = await currencyService.getExchangeItems();
+      const table = await currencyService.getExchangeRates();
 
       const availableCurrencies = Object.values(CURRENCY);
       table.forEach(rate => {
+        expect(rate).toHaveProperty('aprox');
+        expect(rate).toHaveProperty('bid');
+        expect(rate).toHaveProperty('ask');
+        expect(rate).toHaveProperty('currency');
+
         expect(availableCurrencies).toEqual(
           expect.arrayContaining([rate.currency]),
         );
