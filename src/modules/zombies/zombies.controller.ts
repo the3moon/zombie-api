@@ -19,31 +19,19 @@ export class ZombiesController {
   @Post()
   async storeZombie(@Body() zombieDto: CreateZombieDto): Promise<GetZombieDto> {
     const newZombie = await this.zombiesService.storeZombie(zombieDto);
-    return {
-      id: newZombie.id,
-      name: newZombie.name,
-      createdAt: newZombie.createdAt.toISOString(),
-    };
+    return new GetZombieDto(newZombie);
   }
 
   @Get(':id')
   async getZombie(@Param('id') zombieId: string): Promise<GetZombieDto> {
     const zombie = await this.zombiesService.getZombie(zombieId);
-    return {
-      id: zombie.id,
-      name: zombie.name,
-      createdAt: zombie.createdAt.toISOString(),
-    };
+    return new GetZombieDto(zombie);
   }
 
   @Get('')
   async getZombies(): Promise<GetZombieDto[]> {
     const zombies = await this.zombiesService.getZombies();
-    return zombies.map(zombie => ({
-      id: zombie.id,
-      name: zombie.name,
-      createdAt: zombie.createdAt.toISOString(),
-    }));
+    return zombies.map(zombie => new GetZombieDto(zombie));
   }
 
   @Patch(':id')
@@ -55,20 +43,12 @@ export class ZombiesController {
       zombieId,
       updateZombieDto,
     );
-    return {
-      id: zombie.id,
-      name: zombie.name,
-      createdAt: zombie.createdAt.toISOString(),
-    };
+    return new GetZombieDto(zombie);
   }
 
   @Delete(':id')
   async removeZombie(@Param('id') zombieId: string): Promise<GetZombieDto> {
     const zombie = await this.zombiesService.removeZombie(zombieId);
-    return {
-      id: zombie.id,
-      name: zombie.name,
-      createdAt: zombie.createdAt.toISOString(),
-    };
+    return new GetZombieDto(zombie);
   }
 }
