@@ -34,6 +34,8 @@ $ npm run test:cov
 ## TODO:
 
 - [x] CRUD for zombies
-- [ ] CRUD for items
+- [x] CRUD for items
 - [x] zombie test
-- [ ] items test
+- [x] items test
+- [ ] link zombies and items
+- [ ] calculate item values

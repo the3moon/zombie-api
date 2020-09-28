@@ -11,4 +11,4 @@ export class Zombie extends Document {
 }
 
 export const ZombieSchema = SchemaFactory.createForClass(Zombie);
-export const ZombieModel = model(Zombie.name, ZombieSchema);
+export const zombieModel = model<Zombie>(Zombie.name, ZombieSchema);

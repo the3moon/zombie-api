@@ -6,13 +6,13 @@ import { DB_URI } from '../../../test/db';
 import { CreateZombieDto } from './dto/create.zombie.dto';
 import { GetZombieDto } from './dto/get.zombie.dto';
 import { UpdateZombieDto } from './dto/update.zombie.dto';
-import { Zombie, ZombieModel, ZombieSchema } from './schemas/zombie.schema';
+import { Zombie, zombieModel, ZombieSchema } from './schemas/zombie.schema';
 import { ZombiesController } from './zombies.controller';
 import { ZombiesService } from './zombies.service';
 describe('ZombiesController', () => {
   let zombiesController: ZombiesController;
   let zombiesModule: TestingModule;
-  const zombiesCollection = ZombieModel.collection;
+  const zombiesCollection = zombieModel.collection;
 
   beforeAll(async () => {
     await mongoose.connect(DB_URI, {
@@ -44,7 +44,7 @@ describe('ZombiesController', () => {
   let zombiesBefore: number;
 
   beforeEach(async () => {
-    zombiesBefore = await zombiesCollection.countDocuments();
+    zombiesBefore = await zombiesCollection.estimatedDocumentCount();
   });
 
   let createdZombie: GetZombieDto;
@@ -53,7 +53,7 @@ describe('ZombiesController', () => {
     it('should create valid zombie', async () => {
       const zombie = await zombiesController.storeZombie(zombieToStore);
 
-      const zombiesAfter = await zombiesCollection.countDocuments();
+      const zombiesAfter = await zombiesCollection.estimatedDocumentCount();
       expect(zombiesAfter - zombiesBefore).toEqual(1);
 
       expect(zombie).toHaveProperty('name', zombieToStore.name);
@@ -70,7 +70,7 @@ describe('ZombiesController', () => {
       } catch (error) {
         expect(error.message).toEqual('Zombie name is taken');
       }
-      const zombiesAfter = await zombiesCollection.countDocuments();
+      const zombiesAfter = await zombiesCollection.estimatedDocumentCount();
       expect(zombiesAfter - zombiesBefore).toEqual(0);
     });
 
@@ -98,7 +98,7 @@ describe('ZombiesController', () => {
         );
       }
 
-      const zombiesAfter = await zombiesCollection.countDocuments();
+      const zombiesAfter = await zombiesCollection.estimatedDocumentCount();
       expect(zombiesAfter - zombiesBefore).toEqual(0);
     });
   });
@@ -181,7 +181,7 @@ describe('ZombiesController', () => {
     it('should delete zombie', async () => {
       const zombie = await zombiesController.removeZombie(createdZombie.id);
       expect(zombie).toEqual(createdZombie);
-      const zombiesAfter = await zombiesCollection.countDocuments();
+      const zombiesAfter = await zombiesCollection.estimatedDocumentCount();
 
       expect(zombiesAfter - zombiesBefore).toEqual(-1);
     });
@@ -192,7 +192,7 @@ describe('ZombiesController', () => {
       } catch (error) {
         expect(error.message).toEqual('Zombie not found');
       }
-      const zombiesAfter = await zombiesCollection.countDocuments();
+      const zombiesAfter = await zombiesCollection.estimatedDocumentCount();
 
       expect(zombiesAfter - zombiesBefore).toEqual(0);
     });

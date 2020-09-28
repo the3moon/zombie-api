@@ -5,6 +5,7 @@ import { ZombiesController } from './zombies.controller';
 import { ZombiesService } from './zombies.service';
 
 @Module({
+  exports: [ZombiesService],
   imports: [
     MongooseModule.forFeature([{ name: Zombie.name, schema: ZombieSchema }]),
   ],

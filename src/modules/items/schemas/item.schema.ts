@@ -5,7 +5,7 @@ import { Zombie } from '../../../modules/zombies/schemas/zombie.schema';
 @Schema()
 export class Item extends Document {
   @Prop({ required: true })
-  externalId: string;
+  externalId: number;
 
   @Prop({ type: Types.ObjectId, ref: Zombie.name })
   zombie: Zombie;
@@ -18,4 +18,4 @@ export class Item extends Document {
 }
 
 export const ItemSchema = SchemaFactory.createForClass(Item);
-export const ItemModel = model(Item.name, ItemSchema);
+export const itemModel = model<Item>(Item.name, ItemSchema);
