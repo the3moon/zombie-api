@@ -68,7 +68,7 @@ export class ItemsService{
           createdAt: new Date(),
         });
 
-        const itemsCount = await this.itemModel.count({zombie});
+        const itemsCount = await this.itemModel.countDocuments({zombie});
 
         if(itemsCount >= 5){
             throw new HttpException('Zombie can not have more than 5 items',HttpStatus.BAD_REQUEST);
