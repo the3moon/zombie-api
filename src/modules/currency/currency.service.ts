@@ -48,6 +48,13 @@ export class CurrencyService {
                     }
                 })
 
+                formatedRates.push({
+                    bid:1,
+                    ask:1,
+                    aprox:1,
+                    currency:CURRENCY.PLN
+                })
+
                 this.#exchangeCurrencies = formatedRates;
                 this.#lastUpdate = new Date(resp.data[0].effectiveDate).getTime();
             } catch (error) {

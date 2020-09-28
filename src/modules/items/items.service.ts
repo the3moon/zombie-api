@@ -2,6 +2,7 @@ import {HttpException, HttpStatus,  Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import Axios from "axios";
 import { Model, Types } from "mongoose";
+import { Zombie } from "../zombies/schemas/zombie.schema";
 import { ZombiesService } from "../zombies/zombies.service";
 import { CreateItemDto } from "./dto/create.item.dto";
 import { ExchangeItem } from "./dto/exchange.item.dto";
@@ -121,6 +122,10 @@ export class ItemsService{
         const item = await this.getItem(itemId);
         await item.remove();
         return item;
+      }
+
+      async getZombieItems(zombie: Zombie): Promise<Item[]> {
+        return await this.itemModel.find({zombie});
       }
       
 }

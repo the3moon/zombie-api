@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CURRENCY, Exchange } from '../../interfaces/price.dto';
+import { CURRENCY, Exchange, PriceDto } from '../../interfaces/price.dto';
 
 import { CurrencyService } from './currency.service';
 
@@ -37,6 +37,19 @@ describe('CurrencyService', () => {
           expect.arrayContaining([rate.currency]),
         );
       });
+    });
+  });
+
+  describe('Price DTO creation', () => {
+    it('should return valid PriceDto', () => {
+      const euroEchange = { currency: CURRENCY.EUR, aprox: 3, bid: 3, ask: 3 };
+      const plnEchange = { currency: CURRENCY.PLN, aprox: 1, bid: 1, ask: 1 };
+      const usdEchange = { currency: CURRENCY.USD, aprox: 2, bid: 2, ask: 2 };
+
+      const priceDto = new PriceDto(1, [euroEchange, plnEchange, usdEchange]);
+      expect(priceDto).toHaveProperty(CURRENCY.EUR, 0.33);
+      expect(priceDto).toHaveProperty(CURRENCY.USD, 0.5);
+      expect(priceDto).toHaveProperty(CURRENCY.PLN, 1);
     });
   });
 });
